@@ -3,7 +3,7 @@ import Scanner from './Scanner';
 import './App.css';
 
 function App() {
-  const [currentView, setCurrentView] = useState('library'); // Start on library view
+  const [currentView, setCurrentView] = useState('library'); 
   const [activeTab, setActiveTab] = useState('Machine');
   const [assets, setAssets] = useState([]);
   const [name, setName] = useState('');
@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     const fetchAssets = () => {
-      fetch('http://127.0.0.1:5000/api/assets')
+      fetch('https://enterprise-asset-manager.onrender.com/api/assets')
         .then((res) => res.json())
         .then((data) => setAssets(data))
         .catch((err) => console.error(err));
@@ -34,7 +34,7 @@ function App() {
   const handleAddAsset = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://127.0.0.1:5000/api/assets', {
+      const response = await fetch('https://enterprise-asset-manager.onrender.com/api/assets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, description, category, expiration_date: expirationDate || null }),
@@ -54,7 +54,7 @@ function App() {
     if (customIp) payload.assetIp = customIp;
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/assets/${id}`, {
+      const response = await fetch(`https://enterprise-asset-manager.onrender.com/api/assets/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -65,7 +65,7 @@ function App() {
   };
 
   const handleDeleteAsset = async (id) => {
-    await fetch(`http://127.0.0.1:5000/api/assets/${id}`, { method: 'DELETE' });
+    await fetch(`https://enterprise-asset-manager.onrender.com/api/assets/${id}`, { method: 'DELETE' });
     setAssets(assets.filter(asset => asset.id !== id));
   };
 
@@ -86,7 +86,6 @@ function App() {
   return (
     <div className="app-container">
       
-      {/* --- SINGLE CORRECT NAVIGATION BAR --- */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', borderBottom: '1px solid #333', paddingBottom: '15px' }}>
         <h1 style={{ margin: 0 }}>Enterprise Asset Manager</h1>
         <div style={{ display: 'flex', gap: '10px' }}>
@@ -109,7 +108,6 @@ function App() {
         </div>
       </div>
 
-      {/* --- ADD VIEW --- */}
       {currentView === 'add' && (
         <div className="glass-panel" style={{ maxWidth: '600px', margin: '0 auto' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -147,7 +145,6 @@ function App() {
         </div>
       )}
 
-      {/* --- LIBRARY VIEW --- */}
       {currentView === 'library' && (
         <div>
           <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
