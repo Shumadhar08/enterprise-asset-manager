@@ -14,9 +14,12 @@ function App() {
   const [testIps, setTestIps] = useState({});
   const [tick, setTick] = useState(0);
 
+  // GLOBAL API URL
+  const API_BASE_URL = 'https://enterprise-asset-manager.onrender.com/api/assets';
+
   useEffect(() => {
     const fetchAssets = () => {
-      fetch('https://enterprise-asset-manager.onrender.com/api/assets')
+      fetch(API_BASE_URL)
         .then((res) => res.json())
         .then((data) => setAssets(data))
         .catch((err) => console.error(err));
@@ -34,7 +37,7 @@ function App() {
   const handleAddAsset = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://enterprise-asset-manager.onrender.com/api/assets', {
+      const response = await fetch(API_BASE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, description, category, expiration_date: expirationDate || null }),
@@ -54,7 +57,7 @@ function App() {
     if (customIp) payload.assetIp = customIp;
 
     try {
-      const response = await fetch(`https://enterprise-asset-manager.onrender.com/api/assets/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -65,7 +68,7 @@ function App() {
   };
 
   const handleDeleteAsset = async (id) => {
-    await fetch(`https://enterprise-asset-manager.onrender.com/api/assets/${id}`, { method: 'DELETE' });
+    await fetch(`${API_BASE_URL}/${id}`, { method: 'DELETE' });
     setAssets(assets.filter(asset => asset.id !== id));
   };
 
@@ -90,11 +93,12 @@ function App() {
         <h1 style={{ margin: 0 }}>Enterprise Asset Manager</h1>
         <div style={{ display: 'flex', gap: '10px' }}>
           
-          <a href="/EnterpriseAgent-win.exe" download style={{ padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', backgroundColor: '#e67e22', color: 'white', textDecoration: 'none', border: 'none', display: 'flex', alignItems: 'center', fontSize: '0.9rem' }}>
+          {/* UPDATED DOWNLOAD LINKS TO .js */}
+          <a href="/EnterpriseAgent-win.js" download style={{ padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', backgroundColor: '#e67e22', color: 'white', textDecoration: 'none', border: 'none', display: 'flex', alignItems: 'center', fontSize: '0.9rem' }}>
             🪟 Win Agent
           </a>
 
-          <a href="/EnterpriseAgent-macos" download style={{ padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', backgroundColor: '#7f8c8d', color: 'white', textDecoration: 'none', border: 'none', display: 'flex', alignItems: 'center', fontSize: '0.9rem' }}>
+          <a href="/EnterpriseAgent-macos.js" download style={{ padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', backgroundColor: '#7f8c8d', color: 'white', textDecoration: 'none', border: 'none', display: 'flex', alignItems: 'center', fontSize: '0.9rem' }}>
             🍎 Mac Agent
           </a>
 
